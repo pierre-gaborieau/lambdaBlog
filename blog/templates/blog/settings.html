@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<header class="main">
+    <h1>Paramètres du compte</h1>
+</header>
+
+<form class="form-inline" action="{% url 'blog:bSettings' profil_id=user.pk %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="name" class="control-label">Biographie</label>
+      <input type="text" name="Bio" {% if profil.Bio  %}placeholder="{{ profil.Bio }}" {% else %} placeholder="Votre biographie" {% endif %} id="Bio"  required>
+    </div><br>
+  
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+  </form>
+
+
+{% endblock %}

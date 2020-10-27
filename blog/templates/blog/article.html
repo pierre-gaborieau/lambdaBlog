@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <header class="main">
+        <h1>{{ articleName }}</h1>
+    </header>
+
+
+    <span class="image main"><img src="{{ article.Image }}" alt="" /></span>
+
+    <p>{{ article.Intro }}</p>
+
+    {% for p in paragraphes %}
+    <hr class="major" />
+    {% if p.Titre %}
+        <h2>{{p.Titre}}</h2>
+    {% endif %}
+    <p>{{p.Content}}</p>
+    {% endfor %}
+
+    <h3>Auteur : <a href="{% url 'blog:bProfile' profil_id=article.Auteur.pk%}">{{ article.Auteur.User.username }}</a></h3> 
+{% endblock %}
+
+

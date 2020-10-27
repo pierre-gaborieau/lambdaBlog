@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>{{ pageName }} lambdaBlog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a class="logo"><strong>lambdaBlog</strong></a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-reddit"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									
+					{% block content %}
+
+					{% endblock %}	
+
+								</section>
+
+						</div>
+					</div>
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="get" action="{% url 'blog:bSearch' %}">
+										{% csrf_token %}
+										<input type="text" name="query" id="query" placeholder="Rechercher" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="{% url 'blog:bHome' %}">Accueil</a></li>
+										<li><a href="{% url 'blog:bSearch' %}">Tous les Articles</a></li>
+										{% if user.is_authenticated %}
+										<li>
+											<span class="opener">{{ user.username }}</span>
+											<ul>
+												{% for group_for in request.user.groups.all %}
+													{% if group_for.name == 'Auteur' %}
+													<li><a href="{% url 'blog:bNArticle' profil_id=user.pk %}">Nouvel Article</a></li>
+													<li><a href="{% url 'blog:bSettings' profil_id=user.pk %}">Paramètres</a></li>
+													{% endif %}
+												{% endfor %}
+												<li><a href="{% url 'logout' %}">Déconnexion</a></li>
+											</ul>
+										</li>
+										{% else %}
+										<li><a href="{% url 'login' %}">Connexion</a></li>
+										<li><a href="{% url 'blog:aSignup' %}">Inscription</a></li>
+										{% endif %}
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Derniers Posts</h2>
+									</header>
+									<div class="mini-posts">
+										{% for m in miniPost %}
+										<article>
+											<a href="{% url 'blog:bArticle' article_id=m.pk%}" class="image"><img src="{{ m.Image }}" alt="" /></a>
+											<p>{{m.Titre}}</p>
+										</article>
+										{% endfor %}
+									</div>
+									<ul class="actions">
+										<li><a href="{% url 'blog:bSearch' %}" class="button">Plus</a></li>
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Infos</h2>
+									</header>
+									<p>N'hésitez pas à nous contacter sur nos réseaux sociaux !</p>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-reddit"><span class="label">Medium</span></a></li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; lambdaBlog. All rights reserved.<br> Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

@@ -1,0 +1,7 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+  <p>Déconnecté</p>  
+  <a href="{% url 'login'%}">Cliquez ici pour vous reconnecter.</a>
+{% endblock %}

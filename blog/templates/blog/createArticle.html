@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <header class="main">
+        <h1>Nouvel Article</h1>
+    </header>
+    
+    <form class="form-inline" action="{% url 'blog:bNArticle' profil_id=user.pk %}" method="post">
+        {% csrf_token %}
+        <div id="form-content">
+            <div class="form-group">
+                <label for="name" class="control-label">Image</label>
+                <input type="url" name="Image" id="Image" placeholder="Lien de l'image" required>
+            </div><br>
+
+            <div class="form-group">
+                <label for="name" class="control-label">Titre</label>
+                <input type="text" name="Titre" id="Titre" placeholder="Titre de l'article" required>
+            </div><br>
+
+            <div class="form-group">
+                <label for="name" class="control-label">Texte</label>
+                <input type="text" name="Texte" id="Texte" placeholder="Texte" required>
+            </div><br>
+         </div>
+        <button type="button" class="btn btn-success" onclick="AjouterParagraphe()">Ajouter un paragraphe</button><br><br>
+        <button type="submit" class="btn btn-success">Publier</button>
+    </form>
+
+    <script>
+        var iterator = 0
+        function AjouterParagraphe(){
+            var div = document.getElementById('form-content');
+
+            var title = document.createElement('div');
+            title.setAttribute('class', 'form-group');
+            title.innerHTML = '<label for="name" class="control-label">Titre du paragraphe '+ (iterator+1) +'</label><input type="text" name="Titre'+iterator+'" id="Titre'+iterator+'" placeholder="Titre du paragraphe (non requis)">'
+            
+
+            var para = document.createElement('div');
+            para.setAttribute('class', 'form-group');
+            para.innerHTML = '<label for="name" class="control-label">Paragraphe '+ (iterator+1) +'</label><input type="text" name="Para'+iterator+'" id="Para'+iterator+'" placeholder="Texte" required>'
+            
+            div.appendChild(title);
+            div.appendChild(document.createElement('br'));
+            div.appendChild(para);
+            div.appendChild(document.createElement('br'));
+            
+            iterator++;
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="banner">
+    <div class="content">
+        <header>
+            <h1>{{ miniPost.0.Titre}}</h1>
+            <p>{{ miniPost.0.Auteur.username }}</p>
+        </header>
+        <ul class="actions">
+            <li><a href="{% url 'blog:bArticle' article_id=miniPost.0.pk %}" class="button big">Lire</a></li>
+        </ul>
+    </div>
+    <span class="image object">
+        <img src="{{ miniPost.0.Image }}" alt="" />
+    </span>
+</section>
+
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>Nos Sujets</h2>
+    </header>
+    <div class="features">
+        <article>
+            <span class="icon fa-paper-plane"></span>
+            <div class="content">
+                <h3>Actualité</h3>
+                <p>Suivez les derniez sujet d'actualités de divers sujets !</p>
+            </div>
+        </article>
+        <article>
+            <span class="icon solid fa-gamepad"></span>
+            <div class="content">
+                <h3>Gaming</h3>
+                <p>Decouvrez les dernières sorties de jeu vidéos !</p> 
+            </div>
+        </article>
+        <article>
+            <span class="icon solid fa-rocket"></span>
+            <div class="content">
+                <h3>Technologie</h3>
+                <p>Nouvelles technologies, carte graphiques, téléphones... Retrouvez tout ici !</p>
+            </div>
+        </article>
+        <article>
+            <span class="icon solid fa-music"></span>
+            <div class="content">
+                <h3>Festival</h3>
+                <p>L'été, la musique... Ne manquez aucune info de festival !</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>Principaux Auteurs</h2>
+    </header>
+    <div class="posts">
+        {% for a in bestAuteur %}
+        <article>
+            <h3>{{ a.User.username }}</h3>
+            {% if a.Bio %}
+            <p>{{ a.Bio }}</p>
+            {% endif %}
+            <ul class="actions">
+                <li><a href="{% url 'blog:bProfile' profil_id=a.pk %}" class="button">Profil</a></li>
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

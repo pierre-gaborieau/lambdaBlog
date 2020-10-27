@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <header class="main">
+        {% if title != "Résultats pour la requête None" %}
+        <h1>{{ title }}</h1>
+        {% else %}
+        <h1>Tous les articles</h1>
+        {% endif %}
+    </header>
+    <div class="posts">
+        {% for a in articles %}
+        <article>
+            <a class="image"><img src="{{ a.Image }}" alt=""></a>
+            <h3>{{ a.Titre }}</h3>
+           
+            <ul class="actions">
+                <li><a href="{% url 'blog:bArticle' article_id=a.pk %}" class="button">Lire</a></li>
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
+{% endblock %}

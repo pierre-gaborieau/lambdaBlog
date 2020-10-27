@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<header class="main">
+    <h1>{{ profil.User.username }}</h1>
+    {% if profil.Bio %}<p>{{ profil.Bio }}</p>{% endif %}
+</header>
+
+<section>
+    <header class="major">
+        <h2>Ses Articles</h2>
+    </header>
+    <div class="posts">
+        {% for a in articles %}
+        <article>
+            <a class="image"><img src="{{ a.Image }}" alt=""></a>
+            <h3>{{ a.Titre }}</h3>
+           
+            <ul class="actions">
+                <li><a href="{% url 'blog:bArticle' article_id=a.pk %}" class="button">Lire</a></li>
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
